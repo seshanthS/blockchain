@@ -1,0 +1,81 @@
+Profiles:
+    univGenesis:
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *annauniv
+                    - *bit
+    univPeers:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *annauniv
+                - *bit
+            Capabilities:
+                <<: *ApplicationCapabilities
+
+Organizations:
+
+    - &OrdererOrg
+       Name: OrdererOrg
+        ID: OrdererMSP
+	MSPDir: crypto-config/ordererOrganizations/univ.in/msp
+
+    - &annauniv
+        Name: annaunivMSP
+        ID: annaunivMSP
+        MSPDir: crypto-config/peerOrganizations/annauniv.univ.in/msp
+
+        AnchorPeers:
+            - Host: peer0.annauniv.univ.in
+              Port: 7051
+
+    - &bit
+        Name: bitMSP
+        ID: bitMSP
+
+        MSPDir: crypto-config/peerOrganizations/bit.univ.in/msp
+
+        AnchorPeers:
+              Port: 7051
+
+    OrdererType: solo
+
+    Addresses:
+        - orderer.univ.in:7050
+    BatchTimeout: 2s
+    BatchSize:
+
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+
+        PreferredMaxBytes: 512 KB
+
+    Kafka:
+        Brokers:
+            - 127.0.0.1:9092
+
+    Organizations:
+
+Application: &ApplicationDefaults
+
+    Organizations:
+
+Capabilities:
+    Global: &ChannelCapabilities
+        V1_1: true
+
+     Orderer: &OrdererCapabilities
+     V1_1: true
+
+    Application: &ApplicationCapabilities
+        V1_1: true
