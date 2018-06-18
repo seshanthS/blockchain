@@ -1,0 +1,22 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: univ.in
+    Specs:
+      - Hostname: orderer
+PeerOrgs:
+  - Name: annauniv
+    Domain: annauniv.univ.in 
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+
+  - Name: bit
+    Domain: bit.univ.in
+    EnableNodeOUs: true
+    Template:
+      Count: 2
+    Users:
+      Count: 1
+       
